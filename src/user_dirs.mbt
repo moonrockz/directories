@@ -23,40 +23,59 @@ fn user_dir_from_env(env_key : String, home_default : String) -> String? {
 }
 
 ///|
-/// Create UserDirs from current environment. Returns None if HOME is not set.
+fn user_dirs_unix(home : String) -> UserDirs {
+  UserDirs::{
+    home_dir: home,
+    audio_dir: user_dir_from_env("XDG_MUSIC_DIR", join([home, "Music"])),
+    desktop_dir: user_dir_from_env("XDG_DESKTOP_DIR", join([home, "Desktop"])),
+    document_dir: user_dir_from_env(
+      "XDG_DOCUMENTS_DIR",
+      join([home, "Documents"]),
+    ),
+    download_dir: user_dir_from_env(
+      "XDG_DOWNLOAD_DIR",
+      join([home, "Downloads"]),
+    ),
+    font_dir: Some(join([home, ".local", "share", "fonts"])),
+    picture_dir: user_dir_from_env("XDG_PICTURES_DIR", join([home, "Pictures"])),
+    public_dir: user_dir_from_env("XDG_PUBLICSHARE_DIR", join([home, "Public"])),
+    template_dir: user_dir_from_env(
+      "XDG_TEMPLATES_DIR",
+      join([home, "Templates"]),
+    ),
+    video_dir: user_dir_from_env("XDG_VIDEOS_DIR", join([home, "Videos"])),
+  }
+}
+
+///|
+fn user_dirs_windows(home : String) -> UserDirs {
+  UserDirs::{
+    home_dir: home,
+    audio_dir: Some(join([home, "Music"])),
+    desktop_dir: Some(join([home, "Desktop"])),
+    document_dir: Some(join([home, "Documents"])),
+    download_dir: Some(join([home, "Downloads"])),
+    font_dir: None,
+    picture_dir: Some(join([home, "Pictures"])),
+    public_dir: Some(join([home, "Public"])),
+    template_dir: Some(join([home, "Templates"])),
+    video_dir: Some(join([home, "Videos"])),
+  }
+}
+
+///|
+/// Create UserDirs from current environment. Returns None if home is not set.
+/// On Windows uses USERPROFILE and standard subdirs; on Unix uses XDG_* or $HOME subdirs.
 pub fn UserDirs::new() -> UserDirs? {
   match home_dir() {
     Some(home) =>
-      Some(UserDirs::{
-        home_dir: home,
-        audio_dir: user_dir_from_env("XDG_MUSIC_DIR", join([home, "Music"])),
-        desktop_dir: user_dir_from_env(
-          "XDG_DESKTOP_DIR",
-          join([home, "Desktop"]),
-        ),
-        document_dir: user_dir_from_env(
-          "XDG_DOCUMENTS_DIR",
-          join([home, "Documents"]),
-        ),
-        download_dir: user_dir_from_env(
-          "XDG_DOWNLOAD_DIR",
-          join([home, "Downloads"]),
-        ),
-        font_dir: Some(join([home, ".local", "share", "fonts"])),
-        picture_dir: user_dir_from_env(
-          "XDG_PICTURES_DIR",
-          join([home, "Pictures"]),
-        ),
-        public_dir: user_dir_from_env(
-          "XDG_PUBLICSHARE_DIR",
-          join([home, "Public"]),
-        ),
-        template_dir: user_dir_from_env(
-          "XDG_TEMPLATES_DIR",
-          join([home, "Templates"]),
-        ),
-        video_dir: user_dir_from_env("XDG_VIDEOS_DIR", join([home, "Videos"])),
-      })
+      Some(
+        if is_windows() {
+          user_dirs_windows(home)
+        } else {
+          user_dirs_unix(home)
+        },
+      )
     None => None
   }
 }

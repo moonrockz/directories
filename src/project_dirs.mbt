@@ -59,29 +59,22 @@ fn project_path_windows(
   if organization == "" {
     application
   } else {
-    organization + "/" + application
+    organization + path_sep() + application
   }
 }
 
 ///|
-/// Detect platform from env: Windows if APPDATA or LOCALAPPDATA; else macOS if HOME contains "/Users/"; else Linux.
+/// Choose project path segment style from runtime platform.
 fn project_path_segment(
   qualifier : String,
   organization : String,
   application : String,
 ) -> String {
-  if get_env("APPDATA") is Some(_) || get_env("LOCALAPPDATA") is Some(_) {
-    project_path_windows(qualifier, organization, application)
-  } else {
-    match home_dir() {
-      Some(home) =>
-        if home.contains("/Users/") {
-          project_path_macos(qualifier, organization, application)
-        } else {
-          project_path_linux(qualifier, organization, application)
-        }
-      None => project_path_linux(qualifier, organization, application)
-    }
+  match platform() {
+    Platform::Windows =>
+      project_path_windows(qualifier, organization, application)
+    Platform::Darwin => project_path_macos(qualifier, organization, application)
+    _ => project_path_linux(qualifier, organization, application)
   }
 }
 
