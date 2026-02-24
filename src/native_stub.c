@@ -1,15 +1,19 @@
 #include <stdint.h>
 #include "moonbit.h"
 
-// 0 = Unknown, 1 = Windows, 2 = Linux, 3 = Darwin
+#define PLATFORM_KIND_UNKNOWN 0
+#define PLATFORM_KIND_WINDOWS 1
+#define PLATFORM_KIND_LINUX   2
+#define PLATFORM_KIND_DARWIN  3
+
 MOONBIT_FFI_EXPORT int32_t moonrockz_directories_platform_kind(void) {
 #ifdef _WIN32
-  return 1;
+  return PLATFORM_KIND_WINDOWS;
 #elif defined(__APPLE__)
-  return 3;
+  return PLATFORM_KIND_DARWIN;
 #elif defined(__linux__)
-  return 2;
+  return PLATFORM_KIND_LINUX;
 #else
-  return 0;
+  return PLATFORM_KIND_UNKNOWN;
 #endif
 }

@@ -1,8 +1,15 @@
 ///|
 /// Runtime OS detection via FFI. Use when you need to branch on Windows / Linux / macOS.
+/// Raw kind values match native_stub.c PLATFORM_KIND_* (0=Unknown, 1=Windows, 2=Linux, 3=Darwin).
 
 ///|
-#cfg(target="js")
+let platform_kind_unknown : Int = 0
+let platform_kind_windows : Int = 1
+let platform_kind_linux : Int = 2
+let platform_kind_darwin : Int = 3
+
+///|
+#cfg(target = "js")
 extern "js" fn platform_kind_raw() -> Int =
   #|function () {
   #|  let process = require("process");
@@ -16,9 +23,9 @@ extern "js" fn platform_kind_raw() -> Int =
   #|
 
 ///|
-#cfg(any(target="wasm", target="wasm-gc"))
+#cfg(any(target = "wasm", target = "wasm-gc"))
 fn platform_kind_raw() -> Int {
-  0
+  platform_kind_unknown
 }
 
 ///|
@@ -36,9 +43,9 @@ pub enum Platform {
 ///|
 fn platform_from_kind(kind : Int) -> Platform {
   match kind {
-    1 => Platform::Windows
-    2 => Platform::Linux
-    3 => Platform::Darwin
+    k if k == platform_kind_windows => Platform::Windows
+    k if k == platform_kind_linux => Platform::Linux
+    k if k == platform_kind_darwin => Platform::Darwin
     _ => Platform::Unknown
   }
 }
