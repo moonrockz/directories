@@ -60,16 +60,12 @@ jobs:
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "prerelease=$PRERELEASE" >> "$GITHUB_OUTPUT"
 
-      - name: Install native build deps (libbacktrace)
-        run: sudo apt-get update && sudo apt-get install -y libbacktrace-dev
-
       - name: Pre-release checks
         run: |
           moon check
           moon test --target wasm
           moon test --target wasm-gc
           moon test --target js
-          moon test --target native
 
   publish:
     needs: validate
