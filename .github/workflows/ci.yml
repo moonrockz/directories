@@ -30,7 +30,11 @@ jobs:
         run: moon check
 
   unit-tests:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
 
@@ -44,8 +48,13 @@ jobs:
       - name: Install dependencies
         run: moon update
 
-      - name: Install native build deps (libbacktrace)
+      - name: Install native build deps (Linux)
+        if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y libbacktrace-dev
+
+      - name: Install native build deps (macOS)
+        if: runner.os == 'macOS'
+        run: brew install libbacktrace
 
       - name: Run unit tests (wasm)
         run: moon test --target wasm
