@@ -51,4 +51,17 @@ So: **build tooling does not know “Windows/Linux/macOS”**; only backend (js/
 | Can **runtime** know “Linux” vs “macOS”? | Not via a dedicated core/x API; infer from env (e.g. `HOME`, CI vars) or custom FFI. |
 | Where is this used in x? | **path**: `is_windows` drives `Path::sep`, `Path::delimiter`, and win32 vs posix path behavior. |
 
-For **moonrockz/directories**, we currently infer platform from env (`APPDATA`/`LOCALAPPDATA` for Windows, `HOME` containing `"/Users/"` for macOS, else Linux-style). We could later add a dependency on **moonbitlang/x/path** and use path’s behavior (or a re-export of “is Windows”) for more reliable Windows detection if needed.
+### 3. **moonrockz/directories** — own FFI layer
+
+This package provides **runtime OS detection** via its own FFI:
+
+- **`platform() -> Platform`** — returns `Platform::Windows`, `Platform::Linux`, `Platform::Darwin`, or `Platform::Unknown`.
+- **`is_windows() -> Bool`** — convenience for Windows check.
+
+Implementation:
+
+- **JS**: `process.platform` → `"win32"` / `"linux"` / `"darwin"` mapped to the enum.
+- **WASM / WASM-GC**: returns `Unknown` (no host API for platform in the standard).
+- **Native**: C stub with `#ifdef _WIN32` / `__APPLE__` / `__linux__` (see `src/native_stub.c`).
+
+Use this when you need to branch on OS in application code. For path separators only, **moonbitlang/x/path** remains an option.

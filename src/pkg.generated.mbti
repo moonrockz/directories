@@ -2,7 +2,11 @@
 package "moonrockz/directories"
 
 // Values
+pub fn is_windows() -> Bool
+
 pub fn join(Array[String]) -> String
+
+pub fn platform() -> Platform
 
 // Errors
 
@@ -30,6 +34,13 @@ pub fn BaseDirs::new() -> Self?
 pub fn BaseDirs::preference_dir(Self) -> String
 pub fn BaseDirs::runtime_dir(Self) -> String?
 pub fn BaseDirs::state_dir(Self) -> String?
+
+pub enum Platform {
+  Windows
+  Linux
+  Darwin
+  Unknown
+}
 
 pub struct ProjectDirs {
   project_path : String
