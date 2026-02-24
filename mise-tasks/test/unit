@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#MISE description="Run MoonBit unit tests (wasm, wasm-gc, js, native)"
+set -euo pipefail
+moon test --target wasm
+moon test --target wasm-gc
+moon test --target js
+moon test --target native

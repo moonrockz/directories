@@ -1,0 +1,83 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonrockz/directories"
+
+// Values
+pub fn join(Array[String]) -> String
+
+// Errors
+
+// Types and methods
+pub struct BaseDirs {
+  home_dir : String
+  cache_dir : String
+  config_dir : String
+  config_local_dir : String
+  data_dir : String
+  data_local_dir : String
+  executable_dir : String?
+  preference_dir : String
+  runtime_dir : String?
+  state_dir : String?
+}
+pub fn BaseDirs::cache_dir(Self) -> String
+pub fn BaseDirs::config_dir(Self) -> String
+pub fn BaseDirs::config_local_dir(Self) -> String
+pub fn BaseDirs::data_dir(Self) -> String
+pub fn BaseDirs::data_local_dir(Self) -> String
+pub fn BaseDirs::executable_dir(Self) -> String?
+pub fn BaseDirs::home_dir(Self) -> String
+pub fn BaseDirs::new() -> Self?
+pub fn BaseDirs::preference_dir(Self) -> String
+pub fn BaseDirs::runtime_dir(Self) -> String?
+pub fn BaseDirs::state_dir(Self) -> String?
+
+pub struct ProjectDirs {
+  project_path : String
+  cache_dir : String
+  config_dir : String
+  config_local_dir : String
+  data_dir : String
+  data_local_dir : String
+  preference_dir : String
+  runtime_dir : String?
+  state_dir : String?
+}
+pub fn ProjectDirs::cache_dir(Self) -> String
+pub fn ProjectDirs::config_dir(Self) -> String
+pub fn ProjectDirs::config_local_dir(Self) -> String
+pub fn ProjectDirs::data_dir(Self) -> String
+pub fn ProjectDirs::data_local_dir(Self) -> String
+pub fn ProjectDirs::from(String, String, String) -> Self?
+pub fn ProjectDirs::preference_dir(Self) -> String
+pub fn ProjectDirs::project_path(Self) -> String
+pub fn ProjectDirs::runtime_dir(Self) -> String?
+pub fn ProjectDirs::state_dir(Self) -> String?
+
+pub struct UserDirs {
+  home_dir : String
+  audio_dir : String?
+  desktop_dir : String?
+  document_dir : String?
+  download_dir : String?
+  font_dir : String?
+  picture_dir : String?
+  public_dir : String?
+  template_dir : String?
+  video_dir : String?
+}
+pub fn UserDirs::audio_dir(Self) -> String?
+pub fn UserDirs::desktop_dir(Self) -> String?
+pub fn UserDirs::document_dir(Self) -> String?
+pub fn UserDirs::download_dir(Self) -> String?
+pub fn UserDirs::font_dir(Self) -> String?
+pub fn UserDirs::home_dir(Self) -> String
+pub fn UserDirs::new() -> Self?
+pub fn UserDirs::picture_dir(Self) -> String?
+pub fn UserDirs::public_dir(Self) -> String?
+pub fn UserDirs::template_dir(Self) -> String?
+pub fn UserDirs::video_dir(Self) -> String?
+
+// Type aliases
+
+// Traits
+
