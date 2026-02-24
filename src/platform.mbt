@@ -39,6 +39,8 @@ fn platform_kind_raw() -> Int {
 extern "c" fn platform_kind_raw() -> Int = "moonrockz_directories_platform_kind"
 
 ///|
+/// Runtime operating system: Windows, Linux, macOS (Darwin), or Unknown.
+/// Use with `platform()` to branch on OS (e.g. path rules, UI defaults).
 pub enum Platform {
   Windows
   Linux
@@ -57,14 +59,19 @@ fn platform_from_kind(kind : Int) -> Platform {
 }
 
 ///|
-/// Returns the current OS platform at runtime (Windows, Linux, Darwin, or Unknown).
-/// Implemented via FFI per target: JS uses process.platform; native uses C preprocessor macros.
+/// Returns the current OS at runtime: `Platform::Windows`, `Linux`, `Darwin`, or `Unknown`.
+/// JS target uses `process.platform`; native uses C preprocessor (_WIN32, __APPLE__, __linux__).
+///
+/// Example: `match platform() { Platform::Windows => ... ; Platform::Darwin => ... ; _ => ... }`
 pub fn platform() -> Platform {
   platform_from_kind(platform_kind_raw())
 }
 
 ///|
-/// Convenience: true if platform is Windows.
+/// Returns `true` when the current OS is Windows, `false` otherwise.
+/// Use for path separator, HOME vs USERPROFILE, or Windows-specific APIs.
+///
+/// Example: `if is_windows() { "\\" } else { "/" }`
 pub fn is_windows() -> Bool {
   platform() is Platform::Windows
 }

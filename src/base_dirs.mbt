@@ -1,6 +1,7 @@
 ///|
-/// BaseDirs: user-invisible standard directories (cache, config, data, etc.).
-/// Follows XDG on Linux; v1 uses env vars only.
+/// Standard directories for cache, config, data, and related paths (user-level, not app-specific).
+/// On **Windows:** config/roaming from APPDATA, local/cache/data from LOCALAPPDATA.
+/// On **Unix:** XDG_* when set, else \$HOME/.config, .cache, .local/share, .local/state.
 pub struct BaseDirs {
   home_dir : String
   cache_dir : String
@@ -76,8 +77,14 @@ fn base_dirs_windows(home : String) -> BaseDirs {
 }
 
 ///|
-/// Create BaseDirs from current environment. Returns None if home is not set.
-/// On Windows uses LOCALAPPDATA/APPDATA; on Unix uses XDG_* or $HOME subdirs.
+/// Creates BaseDirs from the current environment. Returns `None` if home is not set
+/// (HOME on Unix, USERPROFILE or HOME on Windows).
+///
+/// Example:
+///   match BaseDirs::new() {
+///     Some(base) => base.cache_dir()  // e.g. /home/alice/.cache or %LOCALAPPDATA%
+///     None => ...
+///   }
 pub fn BaseDirs::new() -> BaseDirs? {
   match home_dir() {
     Some(home) =>
@@ -92,52 +99,52 @@ pub fn BaseDirs::new() -> BaseDirs? {
   }
 }
 
-///|
+///| User home directory (e.g. /home/alice or C:\Users\alice).
 pub fn BaseDirs::home_dir(self : BaseDirs) -> String {
   self.home_dir
 }
 
-///|
+///| Cache directory (e.g. .cache on Unix, LOCALAPPDATA on Windows).
 pub fn BaseDirs::cache_dir(self : BaseDirs) -> String {
   self.cache_dir
 }
 
-///|
+///| Config directory (roaming on Windows: APPDATA; Unix: XDG_CONFIG_HOME or .config).
 pub fn BaseDirs::config_dir(self : BaseDirs) -> String {
   self.config_dir
 }
 
-///|
+///| Local config directory (LOCALAPPDATA on Windows; same as config_dir on Unix).
 pub fn BaseDirs::config_local_dir(self : BaseDirs) -> String {
   self.config_local_dir
 }
 
-///|
+///| Data directory (e.g. .local/share on Unix, LOCALAPPDATA on Windows).
 pub fn BaseDirs::data_dir(self : BaseDirs) -> String {
   self.data_dir
 }
 
-///|
+///| Local data directory (same as data_dir on both platforms in v1).
 pub fn BaseDirs::data_local_dir(self : BaseDirs) -> String {
   self.data_local_dir
 }
 
-///|
+///| User executables directory (XDG_BIN_HOME or .local/bin on Unix); None on Windows.
 pub fn BaseDirs::executable_dir(self : BaseDirs) -> String? {
   self.executable_dir
 }
 
-///|
+///| Preference/settings directory (same as config_dir on Unix; APPDATA on Windows).
 pub fn BaseDirs::preference_dir(self : BaseDirs) -> String {
   self.preference_dir
 }
 
-///|
+///| Runtime directory (XDG_RUNTIME_DIR on Unix); None on Windows.
 pub fn BaseDirs::runtime_dir(self : BaseDirs) -> String? {
   self.runtime_dir
 }
 
-///|
+///| State directory (XDG_STATE_HOME or .local/state on Unix); None on Windows.
 pub fn BaseDirs::state_dir(self : BaseDirs) -> String? {
   self.state_dir
 }
