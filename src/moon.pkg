@@ -1,6 +1,6 @@
 import {
   "moonbitlang/core/builtin",
-  "moonbitlang/x/sys" as @sys,
+  "moonbitlang/x/sys" @sys,
 }
 
 options(

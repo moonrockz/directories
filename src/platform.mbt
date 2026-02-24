@@ -4,12 +4,18 @@
 
 ///|
 let platform_kind_unknown : Int = 0
+
+///|
 let platform_kind_windows : Int = 1
+
+///|
 let platform_kind_linux : Int = 2
+
+///|
 let platform_kind_darwin : Int = 3
 
 ///|
-#cfg(target = "js")
+#cfg(target="js")
 extern "js" fn platform_kind_raw() -> Int =
   #|function () {
   #|  let process = require("process");
@@ -23,7 +29,7 @@ extern "js" fn platform_kind_raw() -> Int =
   #|
 
 ///|
-#cfg(any(target = "wasm", target = "wasm-gc"))
+#cfg(any(target="wasm", target="wasm-gc"))
 fn platform_kind_raw() -> Int {
   platform_kind_unknown
 }
