@@ -1,17 +1,29 @@
 ///|
-/// Internal path helpers. Joins segments with "/"; no trailing slash.
-fn join_two(acc : String, seg : String) -> String {
-  if seg is "" {
-    acc
-  } else if acc is "" {
-    seg
+/// Path separator for the current OS: "\\" on Windows, "/" otherwise.
+pub fn path_sep() -> String {
+  if is_windows() {
+    "\\"
   } else {
-    acc + "/" + seg
+    "/"
   }
 }
 
 ///|
-/// Join path segments. Empty segments are skipped; non-empty are joined with "/".
+/// Internal: join two parts with the given separator.
+fn join_two_with(sep : String, acc : String, seg : String) -> String {
+  if seg == "" {
+    acc
+  } else if acc == "" {
+    seg
+  } else {
+    acc + sep + seg
+  }
+}
+
+///|
+/// Join path segments for the current OS. Empty segments are skipped.
+/// Uses platform path separator (\\ on Windows, / on Unix).
 pub fn join(segments : Array[String]) -> String {
-  segments.fold(init="", join_two)
+  let sep = path_sep()
+  segments.fold(init="", (acc, seg) => join_two_with(sep, acc, seg))
 }

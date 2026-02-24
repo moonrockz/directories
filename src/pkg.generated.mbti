@@ -6,6 +6,8 @@ pub fn is_windows() -> Bool
 
 pub fn join(Array[String]) -> String
 
+pub fn path_sep() -> String
+
 pub fn platform() -> Platform
 
 // Errors

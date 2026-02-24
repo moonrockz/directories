@@ -11,7 +11,14 @@ fn get_env(key : String) -> String? {
 }
 
 ///|
-/// Returns the user's home directory if set (non-empty HOME), else None.
+/// Returns the user's home directory. On Windows uses USERPROFILE (fallback HOME); elsewhere uses HOME.
 fn home_dir() -> String? {
-  get_env("HOME")
+  if is_windows() {
+    match get_env("USERPROFILE") {
+      Some(p) => Some(p)
+      None => get_env("HOME")
+    }
+  } else {
+    get_env("HOME")
+  }
 }

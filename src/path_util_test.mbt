@@ -10,13 +10,15 @@ test "path_util join single" {
 
 ///|
 test "path_util join two" {
-  inspect(@directories.join(["home", "alice"]), content="home/alice")
+  let sep = @directories.path_sep()
+  assert_eq(@directories.join(["home", "alice"]), "home" + sep + "alice")
 }
 
 ///|
 test "path_util join skips empty" {
-  inspect(
+  let sep = @directories.path_sep()
+  assert_eq(
     @directories.join(["home", "", "alice", ".config"]),
-    content="home/alice/.config",
+    "home" + sep + "alice" + sep + ".config",
   )
 }
