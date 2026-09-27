@@ -2,10 +2,6 @@ name = "moonrockz/directories"
 
 version = "0.1.0"
 
-import {
-  "moonbitlang/x@0.4.40",
-}
-
 readme = "README.mbt.md"
 
 repository = "https://github.com/moonrockz/directories"

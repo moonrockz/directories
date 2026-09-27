@@ -1,6 +1,6 @@
 import {
   "moonbitlang/core/builtin",
-  "moonbitlang/x/sys",
+  "moonbitlang/core/env",
 }
 
 options(
