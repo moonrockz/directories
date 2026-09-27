@@ -54,6 +54,7 @@ fn platform_from_kind(kind : Int) -> Platform {
     k if k == platform_kind_windows => Platform::Windows
     k if k == platform_kind_linux => Platform::Linux
     k if k == platform_kind_darwin => Platform::Darwin
+    k if k == platform_kind_unknown => Platform::Unknown
     _ => Platform::Unknown
   }
 }

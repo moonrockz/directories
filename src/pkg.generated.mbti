@@ -93,4 +93,3 @@ pub fn UserDirs::video_dir(Self) -> String?
 // Type aliases
 
 // Traits
-

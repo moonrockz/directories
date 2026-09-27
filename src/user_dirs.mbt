@@ -86,52 +86,62 @@ pub fn UserDirs::new() -> UserDirs? {
   }
 }
 
-///| User home directory.
+///|
+/// User home directory.
 pub fn UserDirs::home_dir(self : UserDirs) -> String {
   self.home_dir
 }
 
-///| Music/Audio directory (e.g. Music on Windows, XDG_MUSIC_DIR or Music on Unix).
+///|
+/// Music/Audio directory (e.g. Music on Windows, XDG_MUSIC_DIR or Music on Unix).
 pub fn UserDirs::audio_dir(self : UserDirs) -> String? {
   self.audio_dir
 }
 
-///| Desktop directory.
+///|
+/// Desktop directory.
 pub fn UserDirs::desktop_dir(self : UserDirs) -> String? {
   self.desktop_dir
 }
 
-///| Documents directory.
+///|
+/// Documents directory.
 pub fn UserDirs::document_dir(self : UserDirs) -> String? {
   self.document_dir
 }
 
-///| Downloads directory.
+///|
+/// Downloads directory.
 pub fn UserDirs::download_dir(self : UserDirs) -> String? {
   self.download_dir
 }
 
-///| Fonts directory (Unix: .local/share/fonts); None on Windows.
+///|
+/// Fonts directory (Unix: .local/share/fonts); None on Windows.
 pub fn UserDirs::font_dir(self : UserDirs) -> String? {
   self.font_dir
 }
 
-///| Pictures directory.
+///|
+/// Pictures directory.
 pub fn UserDirs::picture_dir(self : UserDirs) -> String? {
   self.picture_dir
 }
 
-///| Public share directory.
+///|
+/// Public share directory.
 pub fn UserDirs::public_dir(self : UserDirs) -> String? {
   self.public_dir
 }
 
-///| Templates directory.
+///|
+/// Templates directory.
 pub fn UserDirs::template_dir(self : UserDirs) -> String? {
   self.template_dir
 }
 
-///| Videos directory.
+///|
+/// Videos directory.
 pub fn UserDirs::video_dir(self : UserDirs) -> String? {
   self.video_dir
 }

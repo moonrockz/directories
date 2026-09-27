@@ -36,7 +36,7 @@ moonrockz/directories
 ## Project Structure
 
 - MoonBit packages are organized per directory; `moon.pkg` in each directory
-  lists dependencies. The toplevel `moon.mod.json` defines the module.
+  lists dependencies. The toplevel `moon.mod` defines the module.
 
 ## Design Philosophy
 
