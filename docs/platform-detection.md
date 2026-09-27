@@ -7,7 +7,7 @@ How the tooling, core, and x libraries let you know whether you're on Windows, L
 **The build system does not expose host OS** (windows/linux/macos). It only exposes the **backend/target**:
 
 - **Conditional compilation** uses `#cfg(target="...")` with backend values: `js`, `wasm`, `wasm-gc`, `native`, (and possibly `llvm`).
-- **Package config** (`moon.pkg.json` / `targets`) can restrict which files are compiled for which backends (e.g. `"only_js.mbt": ["js"]`).
+- **Package config** (`moon.pkg` / `targets`) can restrict which files are compiled for which backends (e.g. `"only_js.mbt": ["js"]`).
 - There is **no** `target_os`, `cfg(windows)`, or `cfg(linux)` in the language or in `moon` package config.
 
 So at **build time** you can only branch on backend (e.g. “native” vs “js”), not on “Windows” vs “Linux” vs “macOS”. The same `native` build can run on any host OS; the compiler does not pass host OS into the build.
@@ -33,9 +33,9 @@ The path package uses this internally (e.g. for `Path::sep` and `Path::delimiter
 
 So in practice: **runtime “are we on Windows?”** is supported via x’s path internals; **“Linux vs macOS”** is not a dedicated API in core or x — you’d infer it (e.g. from env like `HOME` containing `"/Users/"` for macOS, or from a custom FFI / env var).
 
-### 2. **moonbitlang/x/sys** — environment variables
+### 2. **moonbitlang/core/env** — environment variables
 
-**moonbitlang/x/sys** provides **`get_env_var`** / **`get_env_vars`**. You can use env vars to infer OS when the host sets them, e.g.:
+**moonbitlang/core/env** provides **`get_env_var`** / **`get_env_vars`**. (The older `moonbitlang/x/sys` functions are deprecated in favor of this package.) You can use env vars to infer OS when the host sets them, e.g.:
 
 - **Windows**: often `APPDATA`, `LOCALAPPDATA`, `USERPROFILE`, or `OS` set by the shell/IDE.
 - **CI**: e.g. `OS_PLATFORM` or `RUNNER_OS` (GitHub Actions) to know “windows-latest”, “linux”, “macOS”.

@@ -1,10 +1,10 @@
 ///|
-/// Internal: resolve environment variables. Uses moonbitlang/x/sys for get_env_var.
+/// Internal: resolve environment variables. Uses moonbitlang/core/env for get_env_var.
 
 ///|
 /// Returns the value of the environment variable `key`, or None if unset or empty.
 fn get_env(key : String) -> String? {
-  match @sys.get_env_var(key) {
+  match @env.get_env_var(key) {
     Some(v) => if v == "" { None } else { Some(v) }
     None => None
   }

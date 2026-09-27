@@ -20,7 +20,7 @@ fn join_hyphen(parts : Array[String]) -> String {
 
 ///|
 fn replace_space_with_hyphen(s : String) -> String {
-  let parts = s.split(" ").map(v => v.to_string()).collect()
+  let parts = s.split(" ").map(v => v.to_owned()).collect()
   join_hyphen(parts)
 }
 
@@ -30,7 +30,7 @@ fn project_path_linux(
   _organization : String,
   application : String,
 ) -> String {
-  let lower = application[:].to_lower().to_string()
+  let lower = application[:].to_lower().to_owned()
   replace_space_with_hyphen(lower)
 }
 
@@ -114,47 +114,56 @@ pub fn ProjectDirs::from(
   }
 }
 
-///| Project path segment used under base dirs (e.g. "Acme\\MyApp" on Windows, "myapp" on Linux).
+///|
+/// Project path segment used under base dirs (e.g. "Acme\\MyApp" on Windows, "myapp" on Linux).
 pub fn ProjectDirs::project_path(self : ProjectDirs) -> String {
   self.project_path
 }
 
-///| App cache directory (e.g. base cache_dir + project_path).
+///|
+/// App cache directory (e.g. base cache_dir + project_path).
 pub fn ProjectDirs::cache_dir(self : ProjectDirs) -> String {
   self.cache_dir
 }
 
-///| App config directory (roaming on Windows).
+///|
+/// App config directory (roaming on Windows).
 pub fn ProjectDirs::config_dir(self : ProjectDirs) -> String {
   self.config_dir
 }
 
-///| App local config directory.
+///|
+/// App local config directory.
 pub fn ProjectDirs::config_local_dir(self : ProjectDirs) -> String {
   self.config_local_dir
 }
 
-///| App data directory.
+///|
+/// App data directory.
 pub fn ProjectDirs::data_dir(self : ProjectDirs) -> String {
   self.data_dir
 }
 
-///| App local data directory.
+///|
+/// App local data directory.
 pub fn ProjectDirs::data_local_dir(self : ProjectDirs) -> String {
   self.data_local_dir
 }
 
-///| App preference/settings directory.
+///|
+/// App preference/settings directory.
 pub fn ProjectDirs::preference_dir(self : ProjectDirs) -> String {
   self.preference_dir
 }
 
-///| App runtime directory (Unix only); None on Windows.
+///|
+/// App runtime directory (Unix only); None on Windows.
 pub fn ProjectDirs::runtime_dir(self : ProjectDirs) -> String? {
   self.runtime_dir
 }
 
-///| App state directory (Unix only); None on Windows.
+///|
+/// App state directory (Unix only); None on Windows.
 pub fn ProjectDirs::state_dir(self : ProjectDirs) -> String? {
   self.state_dir
 }

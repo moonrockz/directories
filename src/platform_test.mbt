@@ -3,17 +3,17 @@
 
 ///|
 test "platform returns a known variant" {
-  let p = platform()
+  let p = @directories.platform()
   assert_true(
-    p is Platform::Windows ||
-    p is Platform::Linux ||
-    p is Platform::Darwin ||
-    p is Platform::Unknown,
+    p is @directories.Platform::Windows ||
+    p is @directories.Platform::Linux ||
+    p is @directories.Platform::Darwin ||
+    p is @directories.Platform::Unknown,
   )
 }
 
 ///|
 test "is_windows matches platform Windows" {
-  let expected = platform() is Platform::Windows
-  assert_eq(is_windows(), expected)
+  let expected = @directories.platform() is @directories.Platform::Windows
+  assert_eq(@directories.is_windows(), expected)
 }
