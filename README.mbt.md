@@ -65,7 +65,3 @@ Use `join()` and `path_sep()` when building or displaying paths so they match th
 - **join(segments)** → path string with OS separator; **path_sep()** → current separator; **platform()** / **is_windows()** / **Platform** for OS detection.
 
 v1 resolves paths from environment variables (HOME, USERPROFILE, APPDATA, LOCALAPPDATA, XDG_*). Native platform APIs may be added in a later version.
-
-## Development
-
-Tests run on all supported targets: `mise run test:unit` (wasm, wasm-gc, js, native). On Linux, the **native** target requires `libbacktrace-dev` (e.g. `sudo apt install libbacktrace-dev` on Ubuntu/Debian).
