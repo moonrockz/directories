@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#MISE description="Install the pinned MoonBit toolchain (MOONBIT_INSTALL_VERSION) to ~/.moon"
+set -euo pipefail
+
+: "${MOONBIT_INSTALL_VERSION:?MOONBIT_INSTALL_VERSION is not set. Run this task with 'mise run setup:moonbit'.}"
+
+# `moonc -v` prints "v<version> (<date>)".
+INSTALLED=$(moonc -v 2>/dev/null | awk '{print $1}' || true)
+INSTALLED="${INSTALLED#v}"
+
+if [ "$INSTALLED" = "$MOONBIT_INSTALL_VERSION" ]; then
+  echo "MoonBit $MOONBIT_INSTALL_VERSION is already installed."
+  exit 0
+fi
+
+echo "Installing MoonBit $MOONBIT_INSTALL_VERSION (installed: ${INSTALLED:-none})..."
+curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash -s -- "$MOONBIT_INSTALL_VERSION"

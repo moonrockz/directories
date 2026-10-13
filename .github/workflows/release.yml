@@ -25,12 +25,25 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: hustcer/setup-moonbit@v1
-
       - uses: jdx/mise-action@v2
+        env:
+          # The postinstall hook installs MoonBit with a bash script, which
+          # does not work on Windows. setup-moonbit below installs it instead.
+          MISE_NO_HOOKS: "1"
         with:
           install: true
           cache: true
+
+      - name: Export pinned MoonBit version
+        shell: bash
+        run: |
+          version="$(mise env --json | jq -er .MOONBIT_INSTALL_VERSION)"
+          echo "MOONBIT_INSTALL_VERSION=$version" >> "$GITHUB_ENV"
+
+      - uses: hustcer/setup-moonbit@v1
+        with:
+          version: ${{ env.MOONBIT_INSTALL_VERSION }}
+          core-version: ${{ env.MOONBIT_INSTALL_VERSION }}
 
       - name: Guard branch
         if: github.event_name == 'workflow_dispatch'
@@ -76,12 +89,25 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: hustcer/setup-moonbit@v1
-
       - uses: jdx/mise-action@v2
+        env:
+          # The postinstall hook installs MoonBit with a bash script, which
+          # does not work on Windows. setup-moonbit below installs it instead.
+          MISE_NO_HOOKS: "1"
         with:
           install: true
           cache: true
+
+      - name: Export pinned MoonBit version
+        shell: bash
+        run: |
+          version="$(mise env --json | jq -er .MOONBIT_INSTALL_VERSION)"
+          echo "MOONBIT_INSTALL_VERSION=$version" >> "$GITHUB_ENV"
+
+      - uses: hustcer/setup-moonbit@v1
+        with:
+          version: ${{ env.MOONBIT_INSTALL_VERSION }}
+          core-version: ${{ env.MOONBIT_INSTALL_VERSION }}
 
       - name: Install dependencies
         run: moon update
