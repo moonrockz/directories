@@ -3,20 +3,20 @@
 /// Raw kind values match native_stub.c PLATFORM_KIND_* (0=Unknown, 1=Windows, 2=Linux, 3=Darwin).
 
 ///|
-let platform_kind_unknown : Int = 0
+let platform_kind_unknown : Int32 = 0
 
 ///|
-let platform_kind_windows : Int = 1
+let platform_kind_windows : Int32 = 1
 
 ///|
-let platform_kind_linux : Int = 2
+let platform_kind_linux : Int32 = 2
 
 ///|
-let platform_kind_darwin : Int = 3
+let platform_kind_darwin : Int32 = 3
 
 ///|
 #cfg(target="js")
-extern "js" fn platform_kind_raw() -> Int =
+extern "js" fn platform_kind_raw() -> Int32 =
   #|function () {
   #|  let process = require("process");
   #|  switch (process.platform) {
@@ -30,13 +30,13 @@ extern "js" fn platform_kind_raw() -> Int =
 
 ///|
 #cfg(any(target="wasm", target="wasm-gc"))
-fn platform_kind_raw() -> Int {
+fn platform_kind_raw() -> Int32 {
   platform_kind_unknown
 }
 
 ///|
 #cfg(target="native")
-extern "c" fn platform_kind_raw() -> Int = "moonrockz_directories_platform_kind"
+extern "c" fn platform_kind_raw() -> Int32 = "moonrockz_directories_platform_kind"
 
 ///|
 /// Runtime operating system: Windows, Linux, macOS (Darwin), or Unknown.
@@ -49,7 +49,7 @@ pub enum Platform {
 }
 
 ///|
-fn platform_from_kind(kind : Int) -> Platform {
+fn platform_from_kind(kind : Int32) -> Platform {
   match kind {
     k if k == platform_kind_windows => Platform::Windows
     k if k == platform_kind_linux => Platform::Linux
