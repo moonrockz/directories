@@ -21,11 +21,11 @@ jobs:
       version: ${{ steps.version.outputs.version }}
       prerelease: ${{ steps.version.outputs.prerelease }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - uses: jdx/mise-action@v2
+      - uses: jdx/mise-action@v5
         env:
           # The postinstall hook installs MoonBit with a bash script, which
           # does not work on Windows. setup-moonbit below installs it instead.
@@ -85,11 +85,11 @@ jobs:
     if: ${{ !(github.event.inputs.skip_publish == 'true') }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - uses: jdx/mise-action@v2
+      - uses: jdx/mise-action@v5
         env:
           # The postinstall hook installs MoonBit with a bash script, which
           # does not work on Windows. setup-moonbit below installs it instead.
@@ -128,10 +128,10 @@ jobs:
       (needs.publish.result == 'success' || needs.publish.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: v${{ needs.validate.outputs.version }}
           name: Release ${{ needs.validate.outputs.version }}
