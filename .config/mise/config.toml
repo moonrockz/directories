@@ -1,0 +1,12 @@
+[tools]
+
+[env]
+# MoonBit toolchain version (the `moonc -v` version without the date).
+# `mise run setup:moonbit` installs it locally, and CI installs it with
+# hustcer/setup-moonbit. Change it here only.
+MOONBIT_INSTALL_VERSION = "0.10.15+943464bfa"
+
+[hooks]
+# `mise install` also installs the pinned MoonBit toolchain. CI turns hooks
+# off (MISE_NO_HOOKS) and uses hustcer/setup-moonbit instead.
+postinstall = { task = "setup:moonbit" }

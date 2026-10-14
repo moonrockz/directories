@@ -29,7 +29,7 @@ moonrockz/directories
 │   ├── *_test.mbt        # Blackbox tests
 │   ├── *_wbtest.mbt      # Whitebox tests (if needed)
 │   └── moon.pkg          # Package config
-├── mise-tasks/           # File-based mise tasks
+├── .config/mise/         # mise config.toml + file-based tasks/
 └── .github/workflows/    # CI and release
 ```
 
@@ -62,12 +62,13 @@ Scopes: `core`, `ci`, `build`, etc.
 
 | Task                  | Purpose                                |
 |-----------------------|----------------------------------------|
+| `setup:moonbit`       | Install the pinned MoonBit toolchain   |
 | `test:unit`           | Run unit tests (wasm, wasm-gc, js, native) |
 | `release:version`     | Compute next version (conventional)     |
 | `release:credentials` | Set up mooncakes.io credentials (CI)   |
 | `release:publish`     | Publish package to mooncakes.io       |
 
-Tasks are file-based in `mise-tasks/`. Never add inline `[tasks]` to `.mise.toml`.
+Tasks are file-based in `.config/mise/tasks/`. Never add inline `[tasks]` to `.config/mise/config.toml`.
 
 ## Tooling
 
